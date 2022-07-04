@@ -1,5 +1,5 @@
-function TodoItem(props) {
-const {id, content} = props;
+function TodoItem({todo}) {
+const {id, content} = todo;
   return (
     <>
       <li>

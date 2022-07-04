@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import TodoInput from './TodoInput'; 
-import TodoItem from './TodoItem'; 
+import TodoInput from './TodoInput';
+import TodoItem from './TodoItem';
 
 const initData = {
   todos: [
@@ -34,19 +34,27 @@ const initData = {
 
 function TodoList() {
   const [todos, setTodos] = useState(initData.todos);
-console.log('todos:::',todos);
+  console.log('todos:::', todos);
+
+
+  const addTodo = (todo) => setTodos([...todos,{
+    id: '',
+    content: todo,
+    completed_at: null,
+  }])
+
   return (
     <main>
       <h2>TodoList</h2>
-      <TodoInput/>
+      <TodoInput addTodo={addTodo} />
 
       <ul>
         {
           todos.map((todo, i) => {
             console.log('map:', todo);
             return (
-              <TodoItem key={i} todo={todo}/>
-              // <TodoItem key={i} {...todo}/>
+              <TodoItem key={i} todo={todo} />
+
 
               // <TodoItem key={i} content={todo.content} id={todo.id}/>
               // <TodoItem key={i} content={todo.content}/>
@@ -55,7 +63,7 @@ console.log('todos:::',todos);
           })
         }
       </ul>
-      
+
       {/* #NOTE: EMMET-JSX */}
 
     </main>
