@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
-import Todo from './components/pageTodo';
-import Home from './components/pageHome';
+import Todo from './components/PageTodo';
+import Home from './components/PageHome';
 import { Routes, Route, Link } from "react-router-dom";
 function App() {
   return (
