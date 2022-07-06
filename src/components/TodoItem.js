@@ -1,5 +1,6 @@
-function TodoItem({todo}) {
+function TodoItem({todo,delTodo}) {
 const {id, content} = todo;
+
   return (
     <>
       <li>
@@ -7,6 +8,7 @@ const {id, content} = todo;
         <p>
         {id}
         </p>
+        <input type="button" value="XX" onClick={()=>{delTodo(id)}}/>
       </li>
     </>
   );
