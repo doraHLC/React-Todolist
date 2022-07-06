@@ -5,7 +5,6 @@ const {id, content} = todo;
       <li>
         {content}
         <p>
-          
         {id}
         </p>
       </li>
