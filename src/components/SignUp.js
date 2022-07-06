@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
+
 function SignUp() {
     const navigate = useNavigate();
     const [data,setData] = useState(
