@@ -37,7 +37,7 @@ function TodoList() {
   const [todos, setTodos] = useState([]);
   console.log('todos:::', todos);
 
-  useEffect(()=> {
+  const getTodo = () => {
     const _url = "https://todoo.5xcamp.us/todos";
 
     const token = localStorage.getItem('token');
@@ -59,13 +59,38 @@ function TodoList() {
       // console.log('59:', res.todos);
       setTodos(res.todos)
     })
+  }
+
+  useEffect(()=> {
+    getTodo()
   }, [])
 
-  const addTodo = (todo) => setTodos([...todos,{
-    id: '',
-    content: todo,
-    completed_at: null,
-  }])
+  const addTodo = (todo) => {
+    const _url = "https://todoo.5xcamp.us/todos";
+
+    const token = localStorage.getItem('token');
+    
+    fetch(_url,{
+        method: 'POST',
+        headers:{
+            'Content-Type': 'application/json',
+            'authorization': token
+        },
+        body: JSON.stringify({
+          "todo": {
+            "content": todo
+          }
+        })
+    })
+    .then(res=>{
+        getTodo();
+    })
+    // setTodos([...todos,{
+    //   id: '',
+    //   content: todo,
+    //   completed_at: null,
+    // }])
+  }
 
   return (
     <main>
