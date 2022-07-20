@@ -99,6 +99,28 @@ function TodoList() {
           )
     })
   }
+
+  const toggleTodo = (id)=> {
+    console.log('toggle:', id)
+
+    const _url = "https://todoo.5xcamp.us/todos/"+id+'/toggle';
+
+    fetch(_url, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'authorization': token
+      },
+      
+    })
+      .then(res => {
+        getTodo();
+      }).catch(err=>{
+        console.log(err)
+      }
+      )
+  }
+
   const delTodo = (id) => {
     console.log(id);
     const _url = `https://todoo.5xcamp.us/todos/${id}`;
@@ -135,7 +157,7 @@ function TodoList() {
           todos.map((todo, i) => {
             console.log('map:', todo);
             return (
-              <TodoItem key={i} todo={todo} delTodo={delTodo} editTodo={editTodo} />
+              <TodoItem key={i} todo={todo} delTodo={delTodo} editTodo={editTodo} toggleTodo={toggleTodo} />
 
 
               // <TodoItem key={i} content={todo.content} id={todo.id}/>
