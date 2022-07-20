@@ -10,6 +10,7 @@ const MySwal = withReactContent(Swal);
 function TodoList() {
   const { token, setToken } = useAuth();
   const [todos, setTodos] = useState([]);
+  const [tabStatus, setTabStatus] = useState('all');
   console.log('todos:::', todos);
 
   const getTodo = () => {
@@ -152,12 +153,24 @@ function TodoList() {
       <h2>TodoList</h2>
       <TodoInput addTodo={addTodo} />
 
+      <input type="button" value="ALL" onClick={()=>{
+        setTabStatus('all')
+        console.log(tabStatus)
+        }}/>
+      <input type="button" value="DONE" onClick={()=>{setTabStatus('completed')}}/>
+      <input type="button" value="WIP" onClick={()=>{setTabStatus('active')}}/>
+
+
+      <hr />
+
       <ul>
         {
           todos.map((todo, i) => {
             console.log('map:', todo);
+
             return (
-              <TodoItem key={i} todo={todo} delTodo={delTodo} editTodo={editTodo} toggleTodo={toggleTodo} />
+              // <TodoItem key={i} todo={todo} delTodo={delTodo} editTodo={editTodo} toggleTodo={toggleTodo} />
+              <TodoItem key={i} todo={todo} delTodo={delTodo} editTodo={editTodo} toggleTodo={toggleTodo} tabStatus={tabStatus}/>
 
 
               // <TodoItem key={i} content={todo.content} id={todo.id}/>
