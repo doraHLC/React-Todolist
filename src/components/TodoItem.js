@@ -1,4 +1,4 @@
-function TodoItem({todo,delTodo}) {
+function TodoItem({todo,delTodo,editTodo}) {
 const {id, content} = todo;
 
   return (
@@ -8,7 +8,8 @@ const {id, content} = todo;
         <p>
         {id}
         </p>
-        <input type="button" value="XX" onClick={()=>{delTodo(id)}}/>
+        <input type="button" value="編輯" onClick={()=>{editTodo(id)}}/>
+        <input type="button" value="刪除" onClick={()=>{delTodo(id)}}/>
       </li>
     </>
   );

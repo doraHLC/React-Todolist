@@ -36,9 +36,9 @@ function TodoList() {
       })
   }
 
-  // useEffect(() => {
-  //   getTodo()
-  // }, [])
+  useEffect(() => {
+    getTodo()
+  }, [])
 
   const addTodo = (todo) => {
     const _url = "https://todoo.5xcamp.us/todos";
@@ -66,7 +66,39 @@ function TodoList() {
     //   completed_at: null,
     // }])
   }
-
+  const editTodo = (id) =>{
+    MySwal.fire({
+      title: '輸入修改內容',
+      input: 'text',
+      inputLabel: '',
+      showCancelButton: true,
+      inputValidator: (value) => {
+          if (!value) {
+              return '沒有內容資訊'
+          }
+      }
+    }).then(res=>{
+        const _url = "https://todoo.5xcamp.us/todos/"+id;
+        fetch(_url, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'authorization': token
+          },
+          body: JSON.stringify({
+            "todo": {
+              "content": res.value
+            }
+          })
+        })
+          .then(res => {
+            getTodo();
+          }).catch(err=>{
+            console.log(err)
+          }
+          )
+    })
+  }
   const delTodo = (id) => {
     console.log(id);
     const _url = `https://todoo.5xcamp.us/todos/${id}`;
@@ -103,7 +135,7 @@ function TodoList() {
           todos.map((todo, i) => {
             console.log('map:', todo);
             return (
-              <TodoItem key={i} todo={todo} delTodo={delTodo} />
+              <TodoItem key={i} todo={todo} delTodo={delTodo} editTodo={editTodo} />
 
 
               // <TodoItem key={i} content={todo.content} id={todo.id}/>
