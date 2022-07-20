@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "./Context";
 
 function SignUp() {
+    const { token, setToken } = useAuth;
     const navigate = useNavigate();
     const [data,setData] = useState(
         {
@@ -52,7 +54,7 @@ function SignUp() {
             });
             let myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
-            fetch(_url,{
+            fetch(_url,{ 
                 method: 'POST',
                 headers:{
                     'Content-Type': 'application/json'
@@ -63,7 +65,8 @@ function SignUp() {
             })
             .then(res=>{
                 console.log(res.headers.get("authorization"));
-                localStorage.setItem("token",res.headers.get("authorization"));
+                // localStorage.setItem("token",res.headers.get("authorization"));
+                setToken(res.headers.get("authorization"));
                 return res.json()
             })
             .then(res=>{
@@ -71,6 +74,7 @@ function SignUp() {
             })
         }else{
             console.log("密碼不一致");
+            setToken(null);
         }
     }
     

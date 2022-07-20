@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-
+import { useAuth } from "./Context";
+import { useContext } from 'react';
 // {
 //   "user": {
 //     "email": "string",
@@ -8,17 +9,18 @@ import { useNavigate } from "react-router-dom";
 //   }
 // }
 const Login = ()=> {
-  const navigate = useNavigate();
+    const { token, setToken } = useAuth()
+    const navigate = useNavigate();
 
-  const [data,setData] = useState(
-      {
-          // valid: false,
-          form:{
-              email:'',
-              password:''
-          }
-      }
-  )
+    const [data,setData] = useState(
+        {
+            // valid: false,
+            form:{
+                email:'',
+                password:''
+            }
+        }
+    )
   // useEffect(() => {
   //     // 使用瀏覽器 API 更新文件標題
   //     const _url = "https://todoo.5xcamp.us/users";
@@ -61,11 +63,13 @@ const Login = ()=> {
     })
     .then(res=>{
         console.log(res.headers.get("authorization"));
-        localStorage.setItem("token",res.headers.get("authorization"));
+        // localStorage.setItem("token",res.headers.get("authorization"));
+        setToken(res.headers.get("authorization"));
+        console.log("token:::",token);
         return res.json()
     })
     .then(res=>{
-        navigate('/todo')
+        navigate('/todo');
     })
   }
   
