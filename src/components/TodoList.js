@@ -10,6 +10,7 @@ const MySwal = withReactContent(Swal);
 function TodoList() {
   const { token, setToken } = useAuth();
   const [todos, setTodos] = useState([]);
+  const [tabStatus, setTabStatus] = useState('all');
   console.log('todos:::', todos);
 
   const getTodo = () => {
@@ -99,6 +100,28 @@ function TodoList() {
           )
     })
   }
+
+  const toggleTodo = (id)=> {
+    console.log('toggle:', id)
+
+    const _url = "https://todoo.5xcamp.us/todos/"+id+'/toggle';
+
+    fetch(_url, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'authorization': token
+      },
+      
+    })
+      .then(res => {
+        getTodo();
+      }).catch(err=>{
+        console.log(err)
+      }
+      )
+  }
+
   const delTodo = (id) => {
     console.log(id);
     const _url = `https://todoo.5xcamp.us/todos/${id}`;
@@ -130,12 +153,24 @@ function TodoList() {
       <h2>TodoList</h2>
       <TodoInput addTodo={addTodo} />
 
+      <input type="button" value="ALL" onClick={()=>{
+        setTabStatus('all')
+        console.log(tabStatus)
+        }}/>
+      <input type="button" value="DONE" onClick={()=>{setTabStatus('completed')}}/>
+      <input type="button" value="WIP" onClick={()=>{setTabStatus('active')}}/>
+
+
+      <hr />
+
       <ul>
         {
           todos.map((todo, i) => {
             console.log('map:', todo);
+
             return (
-              <TodoItem key={i} todo={todo} delTodo={delTodo} editTodo={editTodo} />
+              // <TodoItem key={i} todo={todo} delTodo={delTodo} editTodo={editTodo} toggleTodo={toggleTodo} />
+              <TodoItem key={i} todo={todo} delTodo={delTodo} editTodo={editTodo} toggleTodo={toggleTodo} tabStatus={tabStatus}/>
 
 
               // <TodoItem key={i} content={todo.content} id={todo.id}/>
